@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Premium Blog{% endblock %}</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}?v=1.1">
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-left">
+                <a href="{% url 'home' %}" class="logo">NEXT_GEN BLOG</a>
+            </div>
+
+            <div class="nav-center">
+                <div class="search-bar-wrap">
+                    <form action="{% url 'home' %}" method="GET" style="margin: 0;">
+                        <div class="search-inner">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" name="q" placeholder="Search insights..." value="{{ request.GET.q }}">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="nav-right">
+                <div class="desktop-menu" id="desktop-links">
+                    <a href="{% url 'home' %}" class="nav-item">Home</a>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'post-new' %}" class="btn-premium nav-item"><i class="fas fa-plus"></i></a>
+                    <div class="profile-dropdown-container">
+                        <div class="user-avatar-trigger"
+                            onclick="document.getElementById('profile-menu').classList.toggle('show')">
+                            {{ user.username|first|upper }}
+                        </div>
+                        <div id="profile-menu" class="theme-dropdown-menu">
+                            <a href="{% url 'profile' user.username %}" class="dropdown-item">My Profile</a>
+                            <a href="{% url 'profile-edit' %}" class="dropdown-item">Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <form action="{% url 'logout' %}" method="POST" style="margin: 0;">
+                                {% csrf_token %}
+                                <button type="submit" class="logout-link">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="nav-item">Login</a>
+                    <a href="{% url 'signup' %}" class="btn-premium nav-item">Sign Up</a>
+                    {% endif %}
+                </div>
+
+                <button class="mobile-toggle-btn"
+                    onclick="document.getElementById('desktop-links').classList.toggle('mobile-show')">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        {% if messages %}
+        <div class="messages-container animate-fade">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                <i
+                    class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' %}fa-times-circle{% elif message.tags == 'warning' %}fa-exclamation-triangle{% else %}fa-info-circle{% endif %}"></i>
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <main class="animate-fade">
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <footer>
+            <div style="margin-bottom: 2rem; display: flex; justify-content: center; gap: 2rem; font-size: 1.5rem;">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <p>&copy; 2026 NextGen Blog. Crafted with passion by Antigravity.</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>

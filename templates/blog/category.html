@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Category: {{ foo }} | NextGen Blog{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>{{ foo }}</h1>
+    <p>Articles filed under the {{ foo }} category.</p>
+</section>
+
+<div class="posts-grid">
+    {% for post in category_posts %}
+    <article class="card">
+        {% if post.featured_image %}
+        <a href="{% url 'post-detail' post.slug %}">
+            <img src="{{ post.featured_image }}" alt="{{ post.title }}" class="featured-img">
+        </a>
+        {% endif %}
+        <div class="card-meta">
+            <span><i class="far fa-calendar"></i> {{ post.created_at|date:"M d, Y" }}</span>
+        </div>
+        <h2 class="card-title"><a href="{% url 'post-detail' post.slug %}">{{ post.title }}</a></h2>
+        <p style="color: var(--text-secondary);">{{ post.body|truncatewords:30 }}</p>
+    </article>
+    {% empty %}
+    <div class="card" style="text-align: center;">
+        <p>No posts in this category yet.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

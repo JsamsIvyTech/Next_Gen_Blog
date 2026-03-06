@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Post | {{ post.title }}{% endblock %}
+
+{% block content %}
+<div style="max-width: 700px; margin: 0 auto;">
+    <h1 style="margin-bottom: 2rem;">Edit Post</h1>
+    <div class="card">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-premium" style="width: 100%; margin-top: 1rem;">Save Changes</button>
+        </form>
+    </div>
+    <div style="margin-top: 1rem; text-align: center;">
+        <a href="{% url 'post-detail' post.slug %}" style="color: var(--text-secondary);">Cancel</a>
+    </div>
+</div>
+
+<style>
+    form p {
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}New Post | NextGen Blog{% endblock %}
+
+{% block content %}
+<div style="max-width: 700px; margin: 0 auto;">
+    <h1 style="margin-bottom: 2rem;">Create a New Post</h1>
+    <div class="card">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-premium" style="width: 100%; margin-top: 1rem;">Publish Post</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* Styling Django forms to look premium */
+    form p {
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+</style>
+{% endblock %}

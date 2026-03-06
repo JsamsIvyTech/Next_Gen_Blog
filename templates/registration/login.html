@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Login | NextGen Blog{% endblock %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 4rem auto;">
+    <h1 style="text-align: center; margin-bottom: 2rem;">Welcome Back</h1>
+    <div class="card">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-premium" style="width: 100%; margin-top: 1rem;">Login</button>
+        </form>
+    </div>
+    <p style="text-align: center; margin-top: 1.5rem; color: var(--text-secondary);">
+        Don't have an account? <a href="{% url 'signup' %}" style="color: var(--accent-primary);">Sign up today</a>
+    </p>
+</div>
+
+<style>
+    form p {
+        margin-bottom: 1.5rem;
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+    }
+</style>
+{% endblock %}

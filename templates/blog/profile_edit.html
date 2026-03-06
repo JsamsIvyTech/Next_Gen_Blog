@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile | NextGen Blog{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto;">
+    <h1 style="margin-bottom: 2rem;">Profile Settings</h1>
+    <div class="card">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-premium" style="width: 100%; margin-top: 1rem;">Save Settings</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    form p {
+        margin-bottom: 1.5rem;
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+    }
+</style>
+{% endblock %}

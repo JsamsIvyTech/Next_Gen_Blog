@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ profile.user.username }}'s Profile | NextGen Blog{% endblock %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 0 auto;">
+    <div class="card profile-header-card"
+        style="display: flex; gap: 2rem; align-items: center; margin-bottom: 3rem; flex-wrap: wrap;">
+        {% if profile.profile_pic %}
+        <img src="{{ profile.profile_pic }}" alt="{{ profile.user.username }}"
+            style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--accent-primary);">
+        {% else %}
+        <div
+            style="width: 150px; height: 150px; border-radius: 50%; background: var(--border-color); display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+            {{ profile.user.username|first|upper }}
+        </div>
+        {% endif %}
+
+        <div style="flex-grow: 1; min-width: 300px;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">{{ profile.user.username }}</h1>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">{{ profile.bio|default:"No bio yet." }}</p>
+
+            <div style="display: flex; gap: 1.5rem; font-size: 1.2rem;">
+                {% if profile.website_url %}
+                <a href="{{ profile.website_url }}" target="_blank"><i class="fas fa-globe"></i></a>
+                {% endif %}
+                {% if profile.twitter_url %}
+                <a href="{{ profile.twitter_url }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                {% endif %}
+                {% if profile.github_url %}
+                <a href="{{ profile.github_url }}" target="_blank"><i class="fab fa-github"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <h2 style="margin-bottom: 2rem;">Posts by {{ profile.user.username }}</h2>
+    <div class="posts-grid">
+        {% for post in posts %}
+        <article class="card">
+            <h3 class="card-title"><a href="{% url 'post-detail' post.slug %}">{{ post.title }}</a></h3>
+            <p style="color: var(--text-secondary);">{{ post.body|truncatewords:20 }}</p>
+            <div class="card-meta" style="margin-top: 1rem;">
+                <span><i class="far fa-calendar"></i> {{ post.created_at|date:"M d, Y" }}</span>
+                <span><i class="far fa-heart"></i> {{ post.total_likes }}</span>
+            </div>
+        </article>
+        {% empty %}
+        <p>This user hasn't posted anything yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
