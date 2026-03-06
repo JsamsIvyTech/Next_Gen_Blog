@@ -53,9 +53,3 @@ Next Gen Blog is a modern blogging application built with Django. It allows user
 ## Usage
 - Navigate to `http://127.0.0.1:8000` to access the application.
 - For admin access, go to `http://127.0.0.1:8000/admin`.
-
-## Contribution
-Contributions are welcome! Please open an issue or submit a pull request for any improvements.
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
